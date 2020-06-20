@@ -21,6 +21,7 @@ namespace Lab456.Controllers
                 .Include(c => c.Category)
                 .Where(c => c.DateTime > DateTime.Now);
             return View(upcommingCourses);
+            
         }
 
         public ActionResult About()
