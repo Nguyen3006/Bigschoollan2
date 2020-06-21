@@ -1,4 +1,5 @@
 ﻿using Lab456.Models;
+using Lab456.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -18,12 +19,16 @@ namespace Lab456.Controllers
         }
         public ActionResult Index()
         {
-            var upcommingCourses = _dbContext.Courses
-                .Include(c => c.Lecturer)
-                .Include(c => c.Category)
-                .Where(c => c.DateTime > DateTime.Now);
-            return View(upcommingCourses);
-            
+            var upcommingCourses = _dbContext.Courses.Include(c => c.Lecturer)
+                .Include(c => c.Category).Where(c => c.DateTime > DateTime.Now);
+            var viewModel = new CoursesViewModel
+            {
+                UpcomingCourses = upcommingCourses,
+                ShowAction = User.Identity.IsAuthenticated
+            };
+
+            return View(viewModel);
+
         }
 
         public ActionResult About()
